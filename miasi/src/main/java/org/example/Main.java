@@ -5,27 +5,33 @@ import grammar.JavaParser;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Main {
     public static void main(String[] args) throws Exception {
-        // create a CharStream that reads from standard input
-        //CharStream input = CharStreams.fromStream(System.in);
-        CharStream input = CharStreams.fromFileName("Main-copy.java");
+        String inputCode = new String(Files.readAllBytes(Paths.get("src/main/resources/MyClass.java")));
 
-        // create a lexer that feeds off of input CharStream
+        CharStream input = CharStreams.fromString(inputCode);
         JavaLexer lexer = new JavaLexer(input);
-
-        // create a buffer of tokens pulled from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-        // create a parser that feeds off the tokens buffer
         JavaParser parser = new JavaParser(tokens);
 
-        // start parsing at the main rule
         ParseTree tree = parser.compilationUnit();
-        // System.out.println(tree.toStringTree(parser));
 
-        // create a visitor to traverse the parse tree
-        RefactorVisitor visitor = new RefactorVisitor(tokens, "input", "qwerty");
-        System.out.println(visitor.visit(tree));
+        RefactorListener listener = new RefactorListener(tokens, "MyClass", "newRewriter");
+        ParseTreeWalker.DEFAULT.walk(listener, tree);
+
+        System.out.println(listener.getRefactoredCode());
+        saveToFile("src/main/resources/out.java", listener.getRefactoredCode());
+    }
+
+    public static void saveToFile(String filePath, String content) {
+        try {
+            Files.write(Paths.get(filePath), content.getBytes());
+        } catch (IOException e) {
+
+        }
     }
 }
