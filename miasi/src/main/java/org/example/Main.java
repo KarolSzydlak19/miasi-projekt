@@ -20,7 +20,7 @@ public class Main {
 
         ParseTree tree = parser.compilationUnit();
 
-        RefactorListener listener = new RefactorListener(tokens, "MyClass", "newRewriter");
+        RefactorListener listener = new RefactorListener(tokens, "newRewriter", "MyClass.MyClass1");
         ParseTreeWalker.DEFAULT.walk(listener, tree);
 
         System.out.println(listener.getRefactoredCode());
