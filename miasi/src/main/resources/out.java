@@ -8,7 +8,7 @@ public class MyClass {
     }
 
     public void printField() {
-        System.out.println(this.newRewriter); // odwołanie do pola – POWINNO zostać zmienione
+        System.out.println(this.myField); // odwołanie do pola – POWINNO zostać zmienione
     }
 
     public static void main(String[] args) {
@@ -20,6 +20,7 @@ public class MyClass {
     public class MyClass1 {
 
         private int myField = 42;
+        private int doSomething = 42;
 
         public void doSomething() {
             int myField = 99; // zmienna lokalna, NIE powinna być zmieniona
@@ -27,6 +28,7 @@ public class MyClass {
         }
 
         public void printField() {
+            int newRewriter = 99;
             System.out.println(this.myField); // odwołanie do pola – POWINNO zostać zmienione
         }
 

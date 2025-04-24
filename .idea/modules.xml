@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/miasi/miasi.iml" filepath="$PROJECT_DIR$/miasi/miasi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/miasi-projekt.iml" filepath="$PROJECT_DIR$/.idea/miasi-projekt.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,4 +1,4 @@
-// Generated from C:/Users/karol/magister/1sem/miasi/miasi-projekt/miasi/src/main/java/grammar/JavaParser.g4 by ANTLR 4.13.1
+// Generated from //wsl.localhost/Ubuntu-24.04/home/andrzej/studia/antler/miasi-projekt/miasi/src/main/java/grammar/JavaParser.g4 by ANTLR 4.13.2
 package grammar;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
 public class JavaParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.13.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =

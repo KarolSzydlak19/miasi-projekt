@@ -1,4 +1,4 @@
-// Generated from C:/Users/karol/magister/1sem/miasi/miasi-projekt/miasi/src/main/java/grammar/JavaParser.g4 by ANTLR 4.13.1
+// Generated from //wsl.localhost/Ubuntu-24.04/home/andrzej/studia/antler/miasi-projekt/miasi/src/main/java/grammar/JavaParser.g4 by ANTLR 4.13.2
 package grammar;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 

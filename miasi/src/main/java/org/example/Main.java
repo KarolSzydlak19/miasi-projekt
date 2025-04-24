@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String inputCode = new String(Files.readAllBytes(Paths.get("src/main/resources/MyClass.java")));
+        String inputCode = new String(Files.readAllBytes(Paths.get("miasi/src/main/resources/MyClass.java")));
 
         CharStream input = CharStreams.fromString(inputCode);
         JavaLexer lexer = new JavaLexer(input);
@@ -20,11 +20,11 @@ public class Main {
 
         ParseTree tree = parser.compilationUnit();
 
-        RefactorListener listener = new RefactorListener(tokens, "newRewriter", "MyClass.MyClass1");
+        RefactorListener listener = new RefactorListener(tokens, "newRewriter", "MyClass1.printField.myField");
         ParseTreeWalker.DEFAULT.walk(listener, tree);
 
         System.out.println(listener.getRefactoredCode());
-        saveToFile("src/main/resources/out.java", listener.getRefactoredCode());
+        saveToFile("miasi/src/main/resources/out.java", listener.getRefactoredCode());
     }
 
     public static void saveToFile(String filePath, String content) {
