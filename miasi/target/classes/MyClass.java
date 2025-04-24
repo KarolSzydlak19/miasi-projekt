@@ -33,7 +33,7 @@ public class MyClass {
         }
 
         public static void main(String[] args) {
-            MyClass obj = new MyClass(); // konstruktor – POWINNO zostać zmienione
+            MyClass1 obj = new MyClass1(); // konstruktor – POWINNO zostać zmienione
             obj.doSomething();
             obj.printField();
         }

@@ -38,6 +38,23 @@ public class RefactorListener extends JavaParserBaseListener {
         this.refactorType = refactorType;
     }
 
+    /**
+     * Metoda wykonuje refaktoryzację identyfikatorów (np. nazw klas, metod, zmiennych) w trakcie parsowania kodu Java.
+     * Zmienia identyfikatory, które pasują do 'oldName' na 'newName' w odpowiednich kontekstach, w zależności od typu refaktoryzacji.
+     *
+     * Proces refaktoryzacji odbywa się na różnych poziomach struktury kodu, zależnie od tego, czy refaktoryzujemy:
+     * - Nazwę klasy,
+     * - Nazwę metody,
+     * - Zmienną lokalną lub pole,
+     * - Odwołanie do metody lub zmiennej.
+     *
+     * Zmieniany identyfikator jest zastępowany tylko wtedy, gdy spełnia warunki:
+     * - Jest identyczny z 'oldName',
+     * - Znajduje się wewnątrz klasy określonej w 'inputParam',
+     * - Typ refaktoryzacji pasuje do aktualnego kontekstu (np. "class", "method", "variable").
+     *
+     * @param ctx Kontekst identyfikatora, który może być zmieniany.
+     */
     @Override
     public void enterIdentifier(JavaParser.IdentifierContext ctx) {
         ParserRuleContext parent = ctx.getParent();
@@ -61,7 +78,7 @@ public class RefactorListener extends JavaParserBaseListener {
             if (ctx.getText().equals(oldName) && isInsideClass(inputParam.split("\\.")[0], ctx)) {
                 rewriter.replace(ctx.getStart(), newName);
             }
-        } else if (parent instanceof JavaParser.VariableDeclaratorIdContext && refactorType.equals("variable")) {
+        } else if (parent instanceof JavaParser.VariableDeclaratorIdContext && refactorType.equals("variable")) {   //pole klasy
             ParserRuleContext varDecl = parent.getParent(); // VariableDeclarator
             ParserRuleContext varDecls = varDecl != null ? varDecl.getParent() : null; // VariableDeclarators
             ParserRuleContext maybeField = varDecls != null ? varDecls.getParent() : null;
@@ -147,6 +164,4 @@ public class RefactorListener extends JavaParserBaseListener {
         }
         return false;
     }
-
-
 }

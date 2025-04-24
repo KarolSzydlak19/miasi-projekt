@@ -12,9 +12,9 @@ public class MyClass {
     }
 
     public static void main(String[] args) {
-        MyClass newField = new MyClass(); // konstruktor – POWINNO zostać zmienione
-        newField.doSomething();
-        newField.printField();
+        MyClass obj = new MyClass(); // konstruktor – POWINNO zostać zmienione
+        obj.doSomething();
+        obj.printField();
     }
 
     public class MyClass1 {
@@ -29,11 +29,11 @@ public class MyClass {
 
         public void printField() {
             int myField = 99;
-            System.out.println(this.myField); // odwołanie do pola – POWINNO zostać zmienione
+            System.out.println(this.newField); // odwołanie do pola – POWINNO zostać zmienione
         }
 
         public static void main(String[] args) {
-            MyClass obj = new MyClass(); // konstruktor – POWINNO zostać zmienione
+            MyClass1 obj = new MyClass1(); // konstruktor – POWINNO zostać zmienione
             obj.doSomething();
             obj.printField();
         }
