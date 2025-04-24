@@ -78,7 +78,7 @@ public class RefactorListener extends JavaParserBaseListener {
             if (ctx.getText().equals(oldName) && isInsideClass(inputParam.split("\\.")[0], ctx)) {
                 rewriter.replace(ctx.getStart(), newName);
             }
-        } else if (parent instanceof JavaParser.VariableDeclaratorIdContext && refactorType.equals("variable")) {   //pole klasy
+        } else if (parent instanceof JavaParser.VariableDeclaratorIdContext && refactorType.equals("field")) {   //pole klasy
             ParserRuleContext varDecl = parent.getParent(); // VariableDeclarator
             ParserRuleContext varDecls = varDecl != null ? varDecl.getParent() : null; // VariableDeclarators
             ParserRuleContext maybeField = varDecls != null ? varDecls.getParent() : null;
@@ -87,7 +87,7 @@ public class RefactorListener extends JavaParserBaseListener {
             }
         } else if (parent instanceof JavaParser.ExpressionContext) {
             JavaParser.ExpressionContext exprCtx = (JavaParser.ExpressionContext) parent;
-            if ((exprCtx.bop != null && ".".equals(exprCtx.bop.getText()) && isInsideClass(inputParam.split("\\.")[0], ctx) && !isLocalVariable)
+            if ((exprCtx.bop != null && ".".equals(exprCtx.bop.getText()) && isInsideClass(inputParam.split("\\.")[0], ctx) && ctx.getText().equals(oldName) && !isLocalVariable && refactorType.equals("field"))
                     && exprCtx.getChild(0).getText().equals("this")) {
                 rewriter.replace(ctx.getStart(), newName);
             }
