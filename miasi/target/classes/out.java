@@ -1,14 +1,23 @@
 public class MyClass {
 
-    private int myField = 42;
+    private int newField = 42;
+
+    MyClass() {
+
+    }
 
     public void doSomething() {
         int myField = 99; // zmienna lokalna, NIE powinna być zmieniona
         System.out.println(myField);
     }
 
+    public int sampleFunc(int myField) {
+        int a;
+        return a;
+    }
+
     public void printField() {
-        System.out.println(this.myField); // odwołanie do pola – POWINNO zostać zmienione
+        System.out.println(this.newField); // odwołanie do pola – POWINNO zostać zmienione
     }
 
     public static void main(String[] args) {
@@ -20,7 +29,7 @@ public class MyClass {
     public class MyClass1 {
 
         private int myField = 42;
-        private int newField = 42;
+        private int doSomething = 42;
 
         public void doSomething() {
             int myField = 99; // zmienna lokalna, NIE powinna być zmieniona

@@ -11,7 +11,18 @@ import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String inputCode = new String(Files.readAllBytes(Paths.get("src/main/resources/MyClass.java")));
+        if (args.length < 5) {
+            System.err.println("Usage: java -jar yourapp.jar <sourceFile> <newName> <inputParam> <refactorType>");
+            System.exit(1);
+        }
+
+        String sourceFile = args[0];     // e.g., src/main/resources/MyClass.java
+        String newName = args[1];        // e.g., newField
+        String inputParam = args[2];     // e.g., MyClass1.myField
+        String refactorType = args[3];   // e.g., field / method / constructor
+        String fileDestination = args[4]; // src/main/resources/out.java
+
+        String inputCode = new String(Files.readAllBytes(Paths.get(sourceFile)));
 
         CharStream input = CharStreams.fromString(inputCode);
         JavaLexer lexer = new JavaLexer(input);
@@ -20,18 +31,18 @@ public class Main {
 
         ParseTree tree = parser.compilationUnit();
 
-        RefactorListener listener = new RefactorListener(tokens, "newField", "MyClass1.myField", "field");
+        RefactorListener listener = new RefactorListener(tokens, newName, inputParam, refactorType);
         ParseTreeWalker.DEFAULT.walk(listener, tree);
 
-        //System.out.println(listener.getRefactoredCode());
-        saveToFile("src/main/resources/out.java", listener.getRefactoredCode());
+        saveToFile(fileDestination, listener.getRefactoredCode());
     }
 
     public static void saveToFile(String filePath, String content) {
         try {
             Files.write(Paths.get(filePath), content.getBytes());
         } catch (IOException e) {
-
+            System.err.println("Error writing to file: " + filePath);
+            e.printStackTrace();
         }
     }
 }

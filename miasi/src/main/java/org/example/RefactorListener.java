@@ -5,6 +5,7 @@ import grammar.JavaParserBaseListener;
 import lombok.AllArgsConstructor;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStreamRewriter;
 
 import java.util.*;
@@ -140,13 +141,30 @@ public class RefactorListener extends JavaParserBaseListener {
         }
     }
 
+    @Override
+    public void enterConstructorDeclaration(JavaParser.ConstructorDeclarationContext ctx) {
+        System.out.println(ctx.getText());
+
+        JavaParser.IdentifierContext identifierCtx = ctx.identifier();
+        if (identifierCtx == null) return;
+
+        String constructorName = identifierCtx.getText();
+
+        if (refactorType.equals("class") && constructorName.equals(oldName)) {
+            if (isInsideClass(inputParam.split("\\.")[0], ctx)) {
+                rewriter.replace(ctx.getStart(), newName);
+            }
+        }
+    }
+
+
     public String getRefactoredCode() {
         return rewriter.getText();
     }
     private boolean isInsideClass(String className, ParserRuleContext ctx) {
         while (ctx != null) {
             if (ctx instanceof JavaParser.ClassDeclarationContext classCtx) {
-                String foundClassName = classCtx.getChild(1).getText(); // domyślnie Identifier
+                String foundClassName = classCtx.getChild(1).getText();
                 return foundClassName.equals(className);
             }
             ctx = ctx.getParent();
@@ -157,7 +175,7 @@ public class RefactorListener extends JavaParserBaseListener {
     private boolean isInsideMethodInClass(String methodName, ParserRuleContext ctx) {
         while (ctx != null) {
             if (ctx instanceof JavaParser.MethodDeclarationContext classCtx) {
-                String foundClassName = classCtx.getChild(1).getText(); // domyślnie Identifier
+                String foundClassName = classCtx.getChild(1).getText();
                 return foundClassName.equals(methodName);
             }
             ctx = ctx.getParent();
